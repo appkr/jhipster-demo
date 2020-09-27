@@ -1,0 +1,39 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "dev.appkr.demo2"
+    },
+    "jhipsterVersion": "6.10.3",
+    "applicationType": "microservice",
+    "baseName": "demo2",
+    "packageName": "dev.appkr.demo2",
+    "packageFolder": "dev/appkr/demo2",
+    "serverPort": "8082",
+    "authenticationType": "uaa",
+    "uaaBaseName": "uaa",
+    "cacheProvider": "caffeine",
+    "enableHibernateCache": false,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "gradle",
+    "enableSwaggerCodegen": true,
+    "jwtSecretKey": "MWQ1M2ZhMDZiOTMxNTY2YjYwMWMzZDRiYmU3NjBlZGE0YjU0NjUzNTA5MGQ2YjlmYzJkZmNjM2UyNzIxZDIyODU2N2YxYTdlZDBkNWY2OWZkMTEzN2JiMjI2OWFjY2U3ZmFhMTM1ZDBhNGQxM2EwMGNiNjU2YTU0MTczYzQxODA=",
+    "embeddableLaunchScript": false,
+    "creationTimestamp": 1601275750421,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "clientPackageManager": "npm",
+    "blueprints": [],
+    "skipClient": true,
+    "skipUserManagement": true
+  }
+}
