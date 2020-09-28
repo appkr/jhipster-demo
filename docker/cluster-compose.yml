@@ -13,28 +13,61 @@ services:
       - 3306:3306
     command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
     healthcheck:
-      test: [ "CMD", "mysql -uroot", "-psecret", "-e", "SELECT 1" ]
+      test: mysql -uroot -psecret -e 'SELECT 1' || exit 1
 
- uaa-app:
-   image: uaa
-   environment:
-     - _JAVA_OPTIONS=-Xmx512m -Xms256m
-     - SPRING_PROFILES_ACTIVE=prod,swagger
-     - SPRING_DATASOURCE_URL=jdbc:mysql://jhipster-mysql:3306/uaa?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
-     - JHIPSTER_SLEEP=30
+  uaa-app:
+    image: uaa
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=prod,swagger
+      - SPRING_DATASOURCE_URL=jdbc:mysql://jhipster-mysql:3306/uaa?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=secret
+      - JHIPSTER_SLEEP=10
+    ports:
+      - 9999:9999
+    healthcheck:
+      test: curl -s http://localhost:9999/management/health || exit 1
+    depends_on:
+      - jhipster-mysql
+    restart: on-failure
 
- demo1-app:
-   image: demo1
-   environment:
-     - _JAVA_OPTIONS=-Xmx512m -Xms256m
-     - SPRING_PROFILES_ACTIVE=prod,swagger
-     - SPRING_DATASOURCE_URL=jdbc:mysql://jhipster-mysql:3306/demo1?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
-     - JHIPSTER_SLEEP=30
+  demo1-app:
+    image: demo1
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=prod,swagger
+      - SPRING_DATASOURCE_URL=jdbc:mysql://jhipster-mysql:3306/demo1?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=secret
+      - OAUTH2_SIGNATUREVERIFICATION_PUBLICKEYENDPOINTURI=http://uaa-app:9999/oauth/token_key
+      - JHIPSTER_SECURITY_CLIENTAUTHORIZATION_ACCESSTOKENURI=http://uaa-app:9999/oauth/token
+      - JHIPSTER_SLEEP=20
+    ports:
+      - 8081:8081
+    healthcheck:
+      test: curl -s http://localhost:8081/management/health || exit 1
+    depends_on:
+      - jhipster-mysql
+      - uaa-app
+    restart: on-failure
 
- demo2-app:
-   image: demo2
-   environment:
-     - _JAVA_OPTIONS=-Xmx512m -Xms256m
-     - SPRING_PROFILES_ACTIVE=prod,swagger
-     - SPRING_DATASOURCE_URL=jdbc:mysql://jhipster-mysql:3306/demo2?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
-     - JHIPSTER_SLEEP=30
+  demo2-app:
+    image: demo2
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=prod,swagger
+      - SPRING_DATASOURCE_URL=jdbc:mysql://jhipster-mysql:3306/demo2?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=secret
+      - OAUTH2_SIGNATUREVERIFICATION_PUBLICKEYENDPOINTURI=http://uaa-app:9999/oauth/token_key
+      - JHIPSTER_SECURITY_CLIENTAUTHORIZATION_ACCESSTOKENURI=http://uaa-app:9999/oauth/token
+      - JHIPSTER_SLEEP=20
+    ports:
+      - 8082:8082
+    healthcheck:
+      test: curl -s http://localhost:8082/management/health || exit 1
+    depends_on:
+      - jhipster-mysql
+      - uaa-app
+    restart: on-failure

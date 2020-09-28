@@ -1,6 +1,6 @@
 jib {
     from {
-        image = "adoptopenjdk:11-jre-hotspot"
+        image = "adoptopenjdk:8-jre-hotspot"
     }
     to {
         image = "demo1:latest"
