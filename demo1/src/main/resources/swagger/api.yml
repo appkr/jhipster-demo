@@ -1,16 +1,36 @@
 # API-first development with OpenAPI
 # This file will be used at compile time to generate Spring-MVC endpoint stubs using openapi-generator
 openapi: '3.0.1'
+
 info:
   title: 'demo1'
   version: 0.0.1
+
 servers:
   - url: http://localhost:8081/api
     description: Development server
   - url: https://localhost:8081/api
     description: Development server with TLS Profile
-paths: {}
+
+paths:
+  /demo1:
+    get:
+      tags:
+        - Demo1
+      operationId: demo1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StringValue'
+
 components:
+  schemas:
+    StringValue:
+      type: string
+
   responses:
     Problem:
       description: error occurred - see status code and problem object for more information.
