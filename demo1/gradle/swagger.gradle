@@ -2,11 +2,65 @@
  * Plugin that provides API-first development using OpenAPI-generator to
  * generate Spring-MVC endpoint stubs at compile time from an OpenAPI definition file
  */
+buildscript {
+    repositories {
+        mavenLocal()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath "org.openapitools:openapi-generator-gradle-plugin:4.3.1"
+    }
+}
+
 apply plugin: "org.openapi.generator"
+
+def specPath = "$rootDir/src/main/resources/swagger/api.yml".toString()
+
+task buildJavaClient(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask){
+    generatorName = "java"
+    inputSpec = specPath
+    outputDir = "${buildDir}/demo1-client"
+    apiPackage = "dev.appkr.demo1.java.api"
+    modelPackage = "dev.appkr.demo1.java.api.model"
+    configOptions = [
+            title: project.name,
+            useTags: "true",
+            dateLibrary: "java8",
+            java8: "true",
+            hideGenerationTimestamp: "true",
+            library: "resttemplate",
+            serializableModel: "true",
+            serializationLibrary: "jackson",
+            bigDecimalAsString: "true",
+            useRuntimeException: "true"
+    ]
+    validateSpec = true
+}
+
+task buildDemo2Client(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask){
+    generatorName = "java"
+    inputSpec = "$rootDir/../demo2/src/main/resources/swagger/api.yml".toString()
+    outputDir = "${buildDir}/demo2-client"
+    apiPackage = "dev.appkr.demo2.java.api"
+    modelPackage = "dev.appkr.demo2.java.api.model"
+    configOptions = [
+            title: "demo-2",
+            useTags: "true",
+            dateLibrary: "java8",
+            java8: "true",
+            hideGenerationTimestamp: "true",
+            library: "resttemplate",
+            serializableModel: "true",
+            serializationLibrary: "jackson",
+            bigDecimalAsString: "true",
+            useRuntimeException: "true"
+    ]
+    validateSpec = true
+}
 
 openApiGenerate {
     generatorName = "spring"
-    inputSpec = "$rootDir/src/main/resources/swagger/api.yml".toString()
+    inputSpec = specPath
     outputDir = "$buildDir/openapi".toString()
     apiPackage = "dev.appkr.demo1.web.api"
     modelPackage = "dev.appkr.demo1.web.api.model"
@@ -22,8 +76,9 @@ sourceSets {
     main {
         java {
             srcDir file("${project.buildDir.path}/openapi/src/main/java")
+            srcDir file("${project.buildDir.path}/demo2-client/src/main/java")
         }
     }
 }
 
-compileJava.dependsOn("openApiGenerate")
+compileJava.dependsOn("openApiGenerate", "buildJavaClient", "buildDemo2Client")

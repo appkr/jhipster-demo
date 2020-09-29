@@ -175,6 +175,7 @@ gitProperties {
 }
 
 checkstyle {
+    sourceSets = []
     toolVersion '${checkstyle_version}'
     configFile file("checkstyle.xml")
     checkstyleTest.enabled = false
