@@ -10,4 +10,18 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
 public class ApplicationProperties {
+
+  public Demo2Api demo2Api = new Demo2Api();
+
+  public Demo2Api getDemo2Api() {
+    return demo2Api;
+  }
+
+  public static class Demo2Api {
+    private String host = "http://localhost:8082";
+
+    public String getHost() {
+      return host;
+    }
+  }
 }

@@ -194,4 +194,6 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+application:
+  demo2api:
+    host: http://localhost:8082
