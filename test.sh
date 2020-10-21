@@ -93,7 +93,7 @@ fi
 
 print_separator
 
-print_header "Accessing a micro service's resource with the access_token"
+print_header "Accessing protected resource with the access_token"
 print_request "curl -sSf -H \"Authorization: bearer ${ACCESS_TOKEN}\" http://localhost:8081/api/demo1"
 
 RESPONSE=$(curl -sSf -H "Authorization: bearer ${ACCESS_TOKEN}" http://localhost:8081/api/demo1)

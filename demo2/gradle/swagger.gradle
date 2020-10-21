@@ -14,7 +14,7 @@ buildscript {
 
 apply plugin: "org.openapi.generator"
 
-def specPath = "$rootDir/src/main/resources/swagger/api.yml".toString()
+def specPath = "$projectDir/src/main/resources/swagger/api.yml".toString()
 
 task buildJavaClient(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask){
     generatorName = "java"

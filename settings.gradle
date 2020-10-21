@@ -1,0 +1,5 @@
+rootProject.name = 'jhipster-demo'
+
+include 'uaa'
+include 'demo1'
+include 'demo2'

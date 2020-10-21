@@ -19,15 +19,14 @@ public class Demo2ApiConfiguration {
   @Bean
   public RestTemplate demo2ApiRestTemplate() {
     return new RestTemplateBuilder()
-        .rootUri(properties.getDemo2Api().getHost())
+//        .rootUri(properties.getDemo2Api().getHost())
         .build();
   }
 
   @Bean
   public ApiClient demo2ApiClient() {
     ApiClient apiClient = new ApiClient(demo2ApiRestTemplate());
-    apiClient.setApiKeyPrefix("bearer");
-    apiClient.setApiKey("Fill this");
+
     return apiClient;
   }
 
