@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
+import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
@@ -27,8 +28,21 @@ public class Demo2ApiConfiguration {
   }
 
   @Bean
+  public ResourceOwnerPasswordResourceDetails resourceOwnerPasswordResourceDetails() {
+    ResourceOwnerPasswordResourceDetails resourceDetails = new ResourceOwnerPasswordResourceDetails();
+    resourceDetails.setAccessTokenUri("http://localhost:9999/oauth/token");
+    resourceDetails.setClientId("web_app");
+    resourceDetails.setClientSecret("changeit");
+    resourceDetails.setScope(Collections.singletonList("openid"));
+    resourceDetails.setUsername("user");
+    resourceDetails.setPassword("user");
+
+    return resourceDetails;
+  }
+
+  @Bean
   public RestTemplate restTemplateForDemo2Api() {
-    RestTemplate restTemplate = new OAuth2RestTemplate(clientCredentialsResourceDetails());
+    RestTemplate restTemplate = new OAuth2RestTemplate(resourceOwnerPasswordResourceDetails());
     restTemplate.setInterceptors(Collections.singletonList((request, body, execution) -> {
           final ClientHttpResponse response = execution.execute(request, body);
 
