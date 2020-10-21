@@ -19,54 +19,40 @@ Finally, `demo1` gets the resource from `demo2` and respond to the client.
 ### Build & Run
 
 ```bash
-~/jhipster-demo $ bash build.sh
-~/jhipster-demo $ bash run.sh
 ~/jhipster-demo $ bash test.sh
-#
 # Login to the UAA with a "client_credentials" grant
-#
+# 
 # REQUEST:
 # curl -s -X POST --data "grant_type=client_credentials" http://internal:internal@localhost:9999/oauth/token
-#
+# 
 # RESPONSE:
-# {
-#   "access_token": "ey..Ww",
-#   "token_type": "bearer",
-#   "expires_in": 299,
-#   "scope": "web-app",
-#   "iat": 1601302590,
-#   "jti": "eDUSpAuRoYk1wE_2nKarlmIrj3s"
-# }
-#
+# { "access_token" : "ey..oU" }
+# 
 # => SUCCESS
-#
+# 
 # ---
+# 
 # Login to the UAA with a "password" grant
-#
+# 
 # REQUEST:
 # curl -s -X POST --data "username=user&password=user&grant_type=password&scope=openid" http://web_app:changeit@localhost:9999/oauth/token
-#
+# 
 # RESPONSE:
-# {
-#   "access_token": "ey..pQ",
-#   "token_type": "bearer",
-#   "refresh_token": "ey..3A",
-#   "expires_in": 299,
-#   "scope": "openid",
-#   "iat": 1601302590,
-#   "jti": "LOn6oXubU2siTKQgjnSI01lgjJE"
-# }
-#
+# { "access_token" : "ey..DI" }
+# 
 # => SUCCESS
-#
+# 
 # ---
-#
-# Accessing a micro service's resource with the access_token
-#
+# 
+# Accessing protected resource with the access_token
+# 
 # REQUEST:
-# curl -sSf -H "Authorization: bearer ey..pQ" http://localhost:8081/api/demo1
-#
-# This is demo1
+# curl -sSf -H "Authorization: bearer ey..7w" http://localhost:8081/api/demo1
+# 
+# RESPONSE:
+# This is demo2
+# 
+# => SUCCESS
 ```
 
 ### Notable UAA api endpoints
@@ -75,6 +61,11 @@ endpoint|description
 `GET /oauth/token_key`|JWT public token key
 `POST /oauth/token`|login
 
+### Notable UAA clients
+&nbsp;|client_id|client_secret
+---|---|---
+password grant|web_app|change_it
+client credentials grant|internal|internal
 
 ### Commands that I used to build up this project
 

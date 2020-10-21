@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class RestTemplateConfiguration {
     @Bean
-    @Qualifier("restTemplate")
+    @Qualifier("restTemplateForDemo2Api")
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }

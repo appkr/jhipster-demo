@@ -25,7 +25,7 @@ public class UaaSignatureVerifierClient implements OAuth2SignatureVerifierClient
     private final RestTemplate restTemplate;
     protected final OAuth2Properties oAuth2Properties;
 
-    public UaaSignatureVerifierClient(DiscoveryClient discoveryClient, @Qualifier("restTemplate") RestTemplate restTemplate,
+    public UaaSignatureVerifierClient(DiscoveryClient discoveryClient, @Qualifier("restTemplateForDemo2Api") RestTemplate restTemplate,
                                   OAuth2Properties oAuth2Properties) {
         this.restTemplate = restTemplate;
         this.oAuth2Properties = oAuth2Properties;
