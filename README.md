@@ -16,6 +16,8 @@ Demo project to observe inter-operation between a jhipster-uaa and jhipster-gene
 
 Finally, `demo1` gets the resource from `demo2` and respond to the client.
 
+> also see [https://github.com/appkr/laravel-msa-example](https://github.com/appkr/laravel-msa-example)
+
 ### Build & Run
 
 ```bash
@@ -60,11 +62,14 @@ endpoint|description
 ---|---
 `GET /oauth/token_key`|JWT public token key
 `POST /oauth/token`|login
+`? /oauth/check_token`|Check token validity(not clear)
+`GET /.well-known/jwks.json`|JWKS
 
 ### Notable UAA clients
 &nbsp;|client_id|client_secret
 ---|---|---
-password grant|web_app|change_it
+password grant|web_app|changeit
+password grant|user|user
 client credentials grant|internal|internal
 
 ### Commands that I used to build up this project
