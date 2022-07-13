@@ -20,6 +20,18 @@ Finally, `demo1` gets the resource from `demo2` and respond to the client.
 
 ### Build & Run
 
+Run MySQL
+```bash
+~/jhipster-demo $ docker-compose -f docker/mysql.yml up
+```
+
+Run Applications
+```bash
+~/jhipster-demo/demo1 $ ./gradlew bootRun
+~/jhipster-demo/demo2 $ ./gradlew bootRun
+~/jhipster-demo/uaa $ ./gradlew bootRun 
+```
+
 ```bash
 ~/jhipster-demo $ bash test.sh
 # Login to the UAA with a "client_credentials" grant
@@ -60,10 +72,10 @@ Finally, `demo1` gets the resource from `demo2` and respond to the client.
 ### Notable UAA api endpoints
 endpoint|description
 ---|---
-`GET /oauth/token_key`|JWT public token key
 `POST /oauth/token`|login
-`? /oauth/check_token`|Check token validity(not clear)
-`GET /.well-known/jwks.json`|JWKS
+`GET /oauth/token_key`|A public key which is used to validate a JWT signature(`org.springframework.security.oauth2.provider.endpoint.TokenKeyEndpoint`)
+`POST /oauth/check_token`|Check token validity(`org.springframework.security.oauth2.provider.endpoint.CheckTokenEndpoint`)
+`GET /.well-known/jwks.json`|The JSON Web Key Set (JWKS) is a set of keys containing the public keys used to verify any JSON Web Token (JWT) issued by the authorization server and signed using the RS256 signing algorithm
 
 ### Notable UAA clients
 &nbsp;|client_id|client_secret

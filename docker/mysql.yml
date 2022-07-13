@@ -1,10 +1,13 @@
-version: '2'
+version: '3'
 
 services:
-  jhipster-mysql:
-    image: mysql:5.7.30
+
+  mysql:
+    image: mysql:5.7.32
+    platform: linux/amd64
+    container_name: mysql
     volumes:
-      - ../mysql_data:/var/lib/mysql/
+      - $HOME/mysql_data:/var/lib/mysql/
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       - MYSQL_USER=root
@@ -13,4 +16,5 @@ services:
       - 3306:3306
     command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
     healthcheck:
-      test: [ "CMD", "mysql -uroot", "-psecret", "-e", "SELECT 1" ]
+      test: mysql -uroot -psecret -e 'SELECT 1' || exit 1
+      interval: 60s

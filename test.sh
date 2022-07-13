@@ -103,3 +103,42 @@ if [[ "$RESPONSE" =~ "error" ]]; then
 else
   handle_success
 fi
+
+print_separator
+
+print_header "check_token: Ask UAA whether the provided access_token is valid or not"
+print_request "curl -sSf -X POST http://internal:internal@localhost:9999/oauth/check_token?token=${ACCESS_TOKEN}"
+
+RESPONSE=$(curl -sSf -X POST http://internal:internal@localhost:9999/oauth/check_token?token=${ACCESS_TOKEN})
+[ "$DEBUG" = "true" ] && debug $RESPONSE
+if [[ "$RESPONSE" =~ "error" ]]; then
+  handle_fail
+else
+  handle_success
+fi
+
+print_separator
+
+print_header "token_key: A public key which is used to validate a JWT signature"
+print_request "curl -sSf http://localhost:9999/oauth/token_key"
+
+RESPONSE=$(curl -sSf http://localhost:9999/oauth/token_key)
+[ "$DEBUG" = "true" ] && debug $RESPONSE
+if [[ "$RESPONSE" =~ "error" ]]; then
+  handle_fail
+else
+  handle_success
+fi
+
+print_separator
+
+print_header "jwks: The JSON Web Key Set (JWKS) is a set of keys containing the public keys used to verify any JSON Web Token (JWT) issued by the authorization server and signed using the RS256 signing algorithm"
+print_request "curl -sSf http://localhost:9999/.well-known/jwks.json"
+
+RESPONSE=$(curl -sSf http://localhost:9999/.well-known/jwks.json)
+[ "$DEBUG" = "true" ] && debug $RESPONSE
+if [[ "$RESPONSE" =~ "error" ]]; then
+  handle_fail
+else
+  handle_success
+fi
